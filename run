@@ -1,3 +1,4 @@
+#!/bin/bash
 
 docker build --tag openmole-build:latest .
 
@@ -20,10 +21,12 @@ done
 
 OPTIONS="-e JAVA_OPTS=-Dsbt.ivy.home=/sources/.ivy2/ -e HOME=/sources/"
 
+docker_run="docker run -it -u $(id -u) $OPTIONS"
+
 if [[ $VOLUME != "" ]]
 then
-  mkdir -p $VOLUME
-  docker run -it -u $(id -u) $OPTIONS -v "$VOLUME:/sources/" openmole-build /bin/bash
-else  docker run -it -u $UID $OPTIONS openmole-build /bin/bash
+  mkdir -p "$VOLUME"
+  "${docker_run}" -v "$VOLUME:/sources/" openmole-build /bin/bash
+else  "${docker_run}" openmole-build /bin/bash
 fi
 
