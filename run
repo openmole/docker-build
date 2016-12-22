@@ -21,9 +21,9 @@ done
 OPTIONS="-e JAVA_OPTS=-Dsbt.ivy.home=/sources/.ivy2/ -e HOME=/sources/"
 
 if [[ $VOLUME != "" ]]
-then  
+then
   mkdir -p $VOLUME
-  docker run -it -u $UID $OPTIONS -v "$VOLUME:/sources/" openmole-build /bin/bash
+  docker run -it -u $(id -u) $OPTIONS -v "$VOLUME:/sources/" openmole-build /bin/bash
 else  docker run -it -u $UID $OPTIONS openmole-build /bin/bash
 fi
 
