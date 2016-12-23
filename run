@@ -1,6 +1,8 @@
 #!/bin/bash
 
-docker build --tag openmole-build:latest .
+DOCKER_IMAGE=openmole-buildenv
+IMAGE_VERSION=latest
+docker build --tag "${DOCKER_IMAGE}:${IMAGE_VERSION}" .
 
 while [[ $# -gt 1 ]]; do
   key="$1"
@@ -24,7 +26,7 @@ docker_run="docker run -it -u $(id -u) $OPTIONS"
 
 if [[ $VOLUME != "" ]]; then
   mkdir -p "$VOLUME"
-  "${docker_run}" -v "$VOLUME:/sources/" openmole-build /bin/bash
-else  "${docker_run}" openmole-build /bin/bash
+  ${docker_run} -v "$VOLUME:/sources/" "${DOCKER_IMAGE}" /bin/bash
+else  ${docker_run} "${DOCKER_IMAGE}" /bin/bash
 fi
 
