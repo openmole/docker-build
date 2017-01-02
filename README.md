@@ -9,4 +9,4 @@ This projects build OpenMOLE using a docker environment. To use it:
 clone
 compile
 ```
-
+A pre-built image is available in the [Docker hub](https://hub.docker.com/r/openmole/openmole-buildenv/).
