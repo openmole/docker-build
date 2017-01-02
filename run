@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOCKER_IMAGE=openmole-buildenv
+DOCKER_IMAGE=openmole/openmole-buildenv
 IMAGE_VERSION=latest
 docker build --tag "${DOCKER_IMAGE}:${IMAGE_VERSION}" .
 
