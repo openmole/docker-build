@@ -1,12 +1,8 @@
 # docker-build
 
-This projects build OpenMOLE using a docker environment. To use it:
+This projects build OpenMOLE, and create a start-to-run docker environment. To use it:
 
 ```
-# /tmp/openmole is a path on you local machine
-./run -v /tmp/openmole
-# you are in the container now
-clone
-compile
+docker build . -t openmole:latest
+docker run --name openmole -p 8443:8443 -e UID=1000 -e GID=1000 openmole:latest 
 ```
-A pre-built image is available in the [Docker hub](https://hub.docker.com/r/openmole/openmole-buildenv/).
