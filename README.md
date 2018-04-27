@@ -1,8 +1,11 @@
 # docker-build
 
+Before launch you need to change the volume path and the uid/gid corresponding to your user in the `docker-compose.yml` file
+
 This projects build OpenMOLE, and create a start-to-run docker environment. To use it:
 
 ```
-docker build . -t openmole:latest
-docker run --name openmole -p 8443:8443 -e UID=1000 -e GID=1000 openmole:latest 
+docker-compose build 
+docker-compose up
 ```
+
