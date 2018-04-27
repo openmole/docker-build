@@ -11,12 +11,9 @@ WORKDIR /home/root
 
 RUN mkdir -p .ssh && \
     chmod 0700 .ssh
-    #ssh-keyscan -t rsa gitlab.iscpif.fr >> .ssh/known_hosts &&\
-    #cat .ssh/known_hosts
 
 COPY scripts/config .ssh/config
 
-#RUN ssh-keyscan gitlab.iscpif.fr >> ~/.ssh/known_hosts
 RUN git clone https://github.com/openmole/openmole.git
 
 WORKDIR /home/root/openmole
@@ -28,31 +25,26 @@ RUN ["sh", "compile.sh"]
 
 FROM openjdk:8-jdk-alpine AS openmole
 
-ARG UID=1000
-ARG GID=1000
-
 RUN echo http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
 RUN apk upgrade --update-cache --available
 RUN apk add --update &&  apk add --no-cache -f ca-certificates ca-certificates-java su-exec shadow bash mlocate
+
+ARG GID
+ARG UID
+
+RUN addgroup -g $GID mole && adduser -h /home/mole -s /bin/sh -D -G mole -u $UID mole
 
 COPY ./scripts/docker-entrypoint.sh /usr/local/bin
 
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-RUN addgroup -S mole -g $GID && \
-    adduser -h /home/mole -S -u $UID -G mole mole
-
 WORKDIR /home/mole/
 
-COPY --from=build-openmole-sources home/root/openmole/openmole/bin/openmole/target/assemble/ .
+COPY --from=build-openmole-sources --chown=mole:mole home/root/openmole/openmole/bin/openmole/target/assemble/ .
 RUN chmod +x openmole
 
-RUN ls
-
-VOLUME /home/mole
 EXPOSE 8443
+VOLUME /home/mole/workspace
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["/home/mole/openmole", "--port", "8443", "--remote"]
-
-
+CMD ["/home/mole/openmole", "--port", "8443", "--remote", "--workspace", "/home/mole/workspace"]

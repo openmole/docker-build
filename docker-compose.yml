@@ -1,0 +1,15 @@
+version: '3'
+services:
+  openmole:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args :
+        UID: 1000
+        GID: 1000
+    image: openmole/openmole
+    ports:
+      - 8443:8443
+    volumes:
+      - /home/reyman/workspace:/home/mole/workspace
+
