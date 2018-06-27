@@ -1,4 +1,4 @@
-version: '3'
+version: '3.2'
 services:
   openmole:
     build:
@@ -9,7 +9,8 @@ services:
         GID: 1000
     image: openmole/openmole
     ports:
-      - 8443:8443
+      - target: 8443
+        published: 8080
     volumes:
       - /home/reyman/workspace:/home/mole/workspace
 

@@ -17,6 +17,7 @@ COPY scripts/config .ssh/config
 RUN git clone https://github.com/openmole/openmole.git
 
 WORKDIR /home/root/openmole
+RUN git checkout dev
 RUN git submodule update --init --remote openmole
 RUN git lfs logs last
 
@@ -32,7 +33,7 @@ RUN apk add --update &&  apk add --no-cache -f ca-certificates ca-certificates-j
 ARG GID
 ARG UID
 
-RUN addgroup -g $GID mole && adduser -h /home/mole -s /bin/sh -D -G mole -u $UID mole
+RUN addgroup -g 1000 mole && adduser -h /home/mole -s /bin/sh -D -G mole -u 1000 mole
 
 COPY ./scripts/docker-entrypoint.sh /usr/local/bin
 
@@ -47,4 +48,4 @@ EXPOSE 8443
 VOLUME /home/mole/workspace
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["/home/mole/openmole", "--port", "8443", "--remote", "--workspace", "/home/mole/workspace"]
+CMD ["/home/mole/openmole", "--mem","8G", "--port", "8443", "--remote", "--workspace", "/home/mole/workspace"]
