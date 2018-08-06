@@ -5,12 +5,12 @@ services:
       context: .
       dockerfile: Dockerfile
       args :
-        UID: 1000
-        GID: 1000
-    image: openmole/openmole
+        UID: 0
+        GID: 0
+    image: openmole/openmole:8.0-SNAPSHOT
     ports:
       - target: 8443
         published: 8080
     volumes:
-      - /home/reyman/workspace:/home/mole/workspace
+      - /root/openMole_workSpace:/home/mole/workspace
 
