@@ -1,18 +1,6 @@
+FROM openmole/openmole-buildenv AS build-openmole-sources
 
-FROM openjdk:8-jdk-alpine AS build-openmole-sources
-
-MAINTAINER Romain Reuillon <romain.reuillon@iscpif.fr>, Sebastien Rey-Coyrehourcq <sebastien.rey-coyrehourcq@univ-rouen.fr> Jonathan Passerat-Palmbach <j.passerat-palmbach@imperial.ac.uk>
-
-RUN echo http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
-RUN apk upgrade --update-cache --available
-RUN apk add --update && apk add --no-cache -f gnupg ca-certificates git git-lfs curl sbt nodejs python python-pycurl bash tar gzip ca-certificates-java openssh python
-
-WORKDIR /home/root
-
-RUN mkdir -p .ssh && \
-    chmod 0700 .ssh
-
-COPY scripts/config .ssh/config
+MAINTAINER Romain Reuillon <romain.reuillon@iscpif.fr>, Sebastien Rey-Coyrehourcq <sebastien.rey-coyrehourcq@univ-rouen.fr>, Jonathan Passerat-Palmbach <j.passerat-palmbach@imperial.ac.uk>
 
 RUN git clone https://github.com/openmole/openmole.git
 
@@ -49,3 +37,4 @@ VOLUME /home/mole/workspace
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["/home/mole/openmole", "--mem","8G", "--port", "8443", "--remote", "--workspace", "/home/mole/workspace"]
+
