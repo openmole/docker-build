@@ -1,0 +1,18 @@
+FROM openjdk:8-jdk-alpine
+
+MAINTAINER Romain Reuillon <romain.reuillon@iscpif.fr>, Sebastien Rey-Coyrehourcq <sebastien.rey-coyrehourcq@univ-rouen.fr>, Jonathan Passerat-Palmbach <j.passerat-palmbach@imperial.ac.uk>
+
+RUN echo http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
+RUN apk upgrade --update-cache --available
+#RUN apk add --update && apk add --no-cache -f gnupg ca-certificates git git-lfs curl sbt nodejs python python-pycurl bash tar gzip ca-certificates-java openssh python
+RUN apk add --update && apk add --no-cache -f gnupg ca-certificates git git-lfs curl sbt nodejs python bash tar gzip openssh python npm
+
+WORKDIR /home/root
+
+RUN mkdir -p .ssh && \
+    chmod 0700 .ssh
+
+COPY scripts/config .ssh/config
+
+CMD ["/bin/bash"]
+
