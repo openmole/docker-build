@@ -1,7 +1,6 @@
 #!/bin/sh
 
 (
-  cd openmole &&
   git fetch &&
   git submodule init &&
   git submodule update &&
