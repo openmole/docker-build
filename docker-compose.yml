@@ -1,16 +1,19 @@
-version: '3.2'
+version: '3.7'
 services:
   openmole:
     build:
       context: .
       dockerfile: Dockerfile
-      args :
-        UID: 1000
-        GID: 1000
+    container_name: "openmole"
+    environment:
+      - MEM=8G
     image: openmole/openmole
     ports:
       - target: 8443
-        published: 8080
+        published: ${PORT}
     volumes:
-      - /home/reyman/workspace:/home/mole/workspace
+      - data:/home/mole/workspace
 
+volumes:
+  data:
+    name: ${VOLNAME}
