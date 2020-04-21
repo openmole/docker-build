@@ -1,5 +1,5 @@
 
-FROM openjdk:9-jdk-alpine AS build-openmole-sources
+FROM adoptopenjdk:openjdk9 AS build-openmole-sources
 
 MAINTAINER Romain Reuillon <romain.reuillon@iscpif.fr>, Sebastien Rey-Coyrehourcq <sebastien.rey-coyrehourcq@univ-rouen.fr> Jonathan Passerat-Palmbach <j.passerat-palmbach@imperial.ac.uk>
 
@@ -21,7 +21,7 @@ WORKDIR /home/root/openmole
 COPY scripts/compile.sh .
 RUN ["sh", "compile.sh"]
 
-FROM openjdk:9-jdk-alpine AS openmole
+FROM adoptopenjdk:openjdk9 AS openmole
 
 RUN echo http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
 RUN apk upgrade --update-cache --available
