@@ -47,4 +47,4 @@ VOLUME /home/mole/workspace
 ENV MEM=8G
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["sh", "-c", "./openmole --mem ${MEM} --port 8443 --remote --workspace /home/mole/workspace -p /home/mole/gama-plugins"]
+CMD ["sh", "-c", "./openmole --mem ${MEM} --port 8443 --remote --workspace /home/mole/workspace"]

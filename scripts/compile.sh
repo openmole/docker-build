@@ -6,7 +6,7 @@
   git submodule update &&
   git lfs fetch &&
 
-  git checkout v10.0 &&
+  git checkout v10.1 &&
 
   (cd build-system && sbt clean publishLocal) &&
   (cd libraries && sbt clean publishLocal) &&
